@@ -38,6 +38,9 @@
                         (Age: <span style="font-weight: bold;font-style: italic;font-size: 18px;padding: 0 5px;"><?php echo $age; ?></span>),
                         and I’m excited to take a step into your world of dance.<br>
 
+                        I’d like to attend classes at the following location(s): <br>
+                        <span style="font-weight: bold;font-style: italic;font-size: 18px;padding: 0 5px;"><?php echo $location; ?></span><br>
+
                         You can reach me at
                         <span style="font-weight: bold;font-style: italic;font-size: 18px;padding: 0 5px;"><?php echo $mobile_number; ?></span>
                         or

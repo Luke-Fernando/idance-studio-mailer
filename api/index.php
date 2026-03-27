@@ -108,7 +108,7 @@ $register = [
         "fallback" => "Please add your age to continue",
     ],
     [
-        "value" => "location",
+        "value" => "locations",
         "type" => "select",
         "fallback" => "Please select location(s) to continue",
     ],
