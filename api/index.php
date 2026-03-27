@@ -72,28 +72,6 @@ $contact = [
     [
         "value" => "topic",
         "type" => "select",
-        "options" => [
-            [
-                "value" => "1",
-                "label" => "Anmeldung für Probestunde",
-            ],
-            [
-                "value" => "2",
-                "label" => "Fragen zu Kursen und Zeiten",
-            ],
-            [
-                "value" => "3",
-                "label" => "Anfrage für private Tanzstunden",
-            ],
-            [
-                "value" => "4",
-                "label" => "Feedback geben",
-            ],
-            [
-                "value" => "5",
-                "label" => "Anderes",
-            ],
-        ],
         "fallback" => "Please select a topic to continue",
     ],
     [
@@ -125,27 +103,14 @@ $register = [
         "fallback" => "Please add your last name to continue",
     ],
     [
-        "value" => "class_category",
+        "value" => "age",
+        "type" => "text",
+        "fallback" => "Please add your age to continue",
+    ],
+    [
+        "value" => "location",
         "type" => "select",
-        "options" => [
-            [
-                "value" => "1",
-                "label" => "Minis",
-            ],
-            [
-                "value" => "2",
-                "label" => "Kids",
-            ],
-            [
-                "value" => "3",
-                "label" => "Teens",
-            ],
-            [
-                "value" => "4",
-                "label" => "Custom",
-            ],
-        ],
-        "fallback" => "Please select a class category to continue",
+        "fallback" => "Please select location(s) to continue",
     ],
     [
         "value" => "mobile_number",
@@ -199,14 +164,15 @@ function validate_inputs($input)
             }
         } else if ($key["type"] == "select") {
             if (isset($_POST[$key["value"]]) && !empty($_POST[$key["value"]])) {
-                if (in_array($_POST[$key["value"]], array_column($key["options"], "value"))) {
-                    $response["data"][$key["value"]] = $key["options"][array_search($_POST[$key["value"]], array_column($key["options"], "value"))]["label"];
-                } else {
-                    $response["status"] = false;
-                    $response["message"] = $key["fallback"];
-                    $response["data"] = [];
-                    break;
-                }
+                // if (in_array($_POST[$key["value"]], array_column($key["options"], "value"))) {
+                //     $response["data"][$key["value"]] = $key["options"][array_search($_POST[$key["value"]], array_column($key["options"], "value"))]["label"];
+                // } else {
+                //     $response["status"] = false;
+                //     $response["message"] = $key["fallback"];
+                //     $response["data"] = [];
+                //     break;
+                // }
+                $response["data"][$key["value"]] = htmlspecialchars(trim($_POST[$key["value"]]), ENT_QUOTES, 'UTF-8');
             } else {
                 $response["status"] = false;
                 $response["message"] = $key["fallback"];

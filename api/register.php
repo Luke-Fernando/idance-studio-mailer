@@ -35,10 +35,8 @@
 
                         My name is
                         <span style="font-weight: bold;font-style: italic;font-size: 18px;padding: 0 5px;"><?php echo $first_name . " " . $last_name; ?></span>
-                        , and I’m excited to take a step (or maybe a twirl!) into your world of dance.
-                        I’d like to register for the
-                        <span style="font-weight: bold;font-style: italic;font-size: 18px;padding: 0 5px;"><?php echo $class_category; ?></span>
-                        class. <br>
+                        (Age: <span style="font-weight: bold;font-style: italic;font-size: 18px;padding: 0 5px;"><?php echo $age; ?></span>),
+                        and I’m excited to take a step into your world of dance.<br>
 
                         You can reach me at
                         <span style="font-weight: bold;font-style: italic;font-size: 18px;padding: 0 5px;"><?php echo $mobile_number; ?></span>
