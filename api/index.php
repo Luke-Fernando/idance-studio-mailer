@@ -76,9 +76,9 @@ function send_follow_up($name, $send_address, $subject, $template)
 
     try {
         $mail->send();
-        echo 'success';
+        // echo 'success';
     } catch (Exception $ex) {
-        echo "Message could not be sent.";
+        // echo "Message could not be sent.";
         \Sentry\captureException($ex);
         if (isset($mail)) {
             \Sentry\captureMessage("PHPMailer Error: " . $mail->ErrorInfo);
@@ -234,14 +234,15 @@ if (isset($_POST["execution"]) && $_POST["execution"] == "register") {
     $response = validate_inputs($register);
     if ($response["status"]) {
         extract($response["data"]);
+        $name = "$first_name $last_name";
         ob_start();
         require_once "register.php";
         $template = ob_get_clean();
-        set_SMTP("$first_name $last_name", "Class Registration", $template);
+        set_SMTP($name, "Class Registration", $template);
         ob_start();
         require_once "follow.php";
         $template_follow_up = ob_get_clean();
-        send_follow_up("$first_name $last_name", $email, "Thank you for registering", $template_follow_up);
+        send_follow_up($name, $email, "Thank you for registering", $template_follow_up);
     } else {
         echo $response["message"];
     }
