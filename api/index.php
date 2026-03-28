@@ -43,8 +43,33 @@ function set_SMTP($name, $subject, $template)
     global $smtp_from_address;
     global $smtp_send_address;
 
+    $mail->clearAddresses();
     $mail->setFrom($smtp_from_address, $name);
     $mail->addAddress($smtp_send_address, 'Idance Studio Team');
+    $mail->isHTML(true);
+    $mail->Subject = $subject;
+    $mail->Body    = $template;
+
+    try {
+        $mail->send();
+        echo 'success';
+    } catch (Exception $ex) {
+        echo "Message could not be sent.";
+        \Sentry\captureException($ex);
+        if (isset($mail)) {
+            \Sentry\captureMessage("PHPMailer Error: " . $mail->ErrorInfo);
+        }
+    }
+}
+
+function send_follow_up($name, $send_address, $subject, $template)
+{
+    global $mail;
+    global $smtp_from_address;
+
+    $mail->clearAddresses();
+    $mail->setFrom($smtp_from_address, 'Idance Studio Team');
+    $mail->addAddress($send_address, $name);
     $mail->isHTML(true);
     $mail->Subject = $subject;
     $mail->Body    = $template;
@@ -196,6 +221,10 @@ if (isset($_POST["execution"]) && $_POST["execution"] == "contact") {
         require_once "contact.php";
         $template = ob_get_clean();
         set_SMTP($name, "Contacting Idance Studio", $template);
+        ob_start();
+        require_once "follow.php";
+        $template_follow_up = ob_get_clean();
+        send_follow_up("$name", $email, "Thank you for registering", $template_follow_up);
     } else {
         echo $response["message"];
     }
@@ -209,6 +238,10 @@ if (isset($_POST["execution"]) && $_POST["execution"] == "register") {
         require_once "register.php";
         $template = ob_get_clean();
         set_SMTP("$first_name $last_name", "Class Registration", $template);
+        ob_start();
+        require_once "follow.php";
+        $template_follow_up = ob_get_clean();
+        send_follow_up("$first_name $last_name", $email, "Thank you for registering", $template_follow_up);
     } else {
         echo $response["message"];
     }
