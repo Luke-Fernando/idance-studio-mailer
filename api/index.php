@@ -224,7 +224,7 @@ if (isset($_POST["execution"]) && $_POST["execution"] == "contact") {
         ob_start();
         require_once "follow.php";
         $template_follow_up = ob_get_clean();
-        send_follow_up("$name", $email, "Thank you for registering", $template_follow_up);
+        send_follow_up("$name", $email, "Thank you for contacting", $template_follow_up);
     } else {
         echo $response["message"];
     }
